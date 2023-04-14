@@ -1,5 +1,5 @@
 """
-PP Home Assignment
+PP Home Assignment (paypal word assign.)
 Lior Trieman
 """
 
@@ -21,6 +21,7 @@ from sklearn import metrics
 
 
 def impute_data_median(data_frame, vector_ind):
+    """ feel missing data with median value"""
     vector = data_frame.iloc[:, vector_ind]
     imp = SimpleImputer(strategy="median")
     vector_df = pd.DataFrame(vector)
@@ -42,16 +43,17 @@ def drop_features(df):  # dropping "timestamp" - not relevant?
 
 
 def all_lower_case_df(df):
-    df = df.applymap(lambda s: s.lower() if type(s) == str else s)  # converting all list to \
+    df = df.applymap(lambda s: s.lower() if type(s) == str else s)  # converting all strings to lowercase \
     return df
 
 
 def all_float_df(df):
-    df = df.applymap(lambda s: float(s) if type(s) == int else s)  # converting all numeric \
+    df = df.applymap(lambda s: float(s) if type(s) == int else s)  # converting all numeric to float \
     return df
 
 
 def transform_features(df):
+    """ apply functions of the df"""
     df = all_lower_case_df(df)
     df = all_float_df(df)
     df = drop_features(df)
@@ -63,7 +65,7 @@ def encode_features(df_train, df_test):
         [df_train[features], df_test[features]])  # catch categories that might be in test set also
 
     for feature in features:
-        le = preprocessing.LabelEncoder()
+        le = preprocessing.LabelEncoder() #think this is redundant
         le = le.fit(df_combined[feature])
         df_train[feature] = le.transform(df_train[feature])
         df_test[feature] = le.transform(df_test[feature])
